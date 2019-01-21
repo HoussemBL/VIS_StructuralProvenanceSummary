@@ -1,0 +1,758 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v4.json",
+  "width": 1200,
+  "height": 1000,
+  "padding": 0,
+  "autosize": "none",
+  "signals": [
+    {
+      "name": "cx",
+      "update": "width / 3"
+    },
+    {
+      "name": "cy",
+      "update": "height / 3"
+    },
+    {
+      "name": "nodeRadius",
+      "value": 17,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 200,
+        "step": 1
+      }
+    },
+    {
+      "name": "nodeCharge",
+      "value": -120,
+      "bind": {
+        "input": "range",
+        "min": -200,
+        "max": 20,
+        "step": 1
+      }
+    },
+    {
+      "name": "linkDistance",
+      "value": 120,
+      "bind": {
+        "input": "range",
+        "min": 5,
+        "max": 250,
+        "step": 1
+      }
+    },
+    {
+      "name": "static",
+      "value": true,
+      "bind": {
+        "input": "checkbox"
+      }
+    },
+    {
+      "description": "State variable for active node fix status.",
+      "name": "fix",
+      "value": 0,
+      "on": [
+        {
+          "events": "symbol:mouseout[!event.buttons], window:mouseup",
+          "update": "0"
+        },
+        {
+          "events": "symbol:mouseover",
+          "update": "fix || 1"
+        },
+        {
+          "events": "[symbol:mousedown, window:mouseup] > window:mousemove!",
+          "update": "2",
+          "force": true
+        }
+      ]
+    },
+    {
+      "description": "Graph node most recently interacted with.",
+      "name": "node",
+      "value": null,
+      "on": [
+        {
+          "events": "symbol:mouseover",
+          "update": "fix === 1 ? item() : node"
+        }
+      ]
+    },
+    {
+      "description": "Flag to restart Force simulation upon data changes.",
+      "name": "restart",
+      "value": false,
+      "on": [
+        {
+          "events": {
+            "signal": "fix"
+          },
+          "update": "fix > 1"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "shapes-mapping",
+      "values": [
+        {
+          "InfoType": "entity",
+          "shape": "circle"
+        },
+        {
+          "InfoType": "activity",
+          "shape": "square"
+        },
+        {
+          "InfoType": "agent",
+          "shape": "diamond"
+        }
+      ]
+    },
+    {
+      "name": "mapping2",
+      "values": [
+        {
+          "InfoType": "entity",
+          "c": "#99d8c9"
+        },
+        {
+          "InfoType": "activity",
+          "c": "#238b45"
+        },
+        {
+          "InfoType": "result",
+          "c": "blue"
+        }
+      ]
+    },
+    {
+      "name": "mapping",
+      "values": [
+        {
+          "InfoType": "used",
+          "c": "#fdbb84"
+        },
+        {
+          "InfoType": "wasDerivedFrom",
+          "c": "#99d8c9"
+        },
+        {
+          "InfoType": "wasGeneratedBy",
+          "c": "brown"
+        },
+        {
+          "InfoType": "wasInfluencedBy",
+          "c": "green"
+        },
+        {
+          "InfoType": "wasStartedBy",
+          "c": "blue"
+        }
+      ]
+    },
+    {
+      "name": "node-data",
+      "values": [
+        {
+          "name": "xxx",
+          "index": 0,
+          "structure": "Entity(Record(  BoardMemebershipTupleId-\u003e String )",
+          "type": "result2"
+        },
+        {
+          "name": "act_maffei1.json9",
+          "index": 1,
+          "structure": "Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "act_maffei1.json0",
+          "index": 2,
+          "structure": "Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "ent_maffei1.json443718288",
+          "index": 3,
+          "structure": "Entity(Record(  BoardFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "ent_maffei1.json1048172075",
+          "index": 4,
+          "structure": "Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.reportingDate-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "ent_maffei1.json907602122",
+          "index": 5,
+          "structure": "Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "act_maffei1.json11",
+          "index": 6,
+          "structure": "Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "act_maffei1.json8",
+          "index": 7,
+          "structure": "Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "act_maffei1.json1",
+          "index": 8,
+          "structure": "Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "ent_maffei1.json588579370",
+          "index": 9,
+          "structure": "Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "act_maffei1.json16",
+          "index": 10,
+          "structure": "Activity(Record(  Select_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "act_maffei1.json2",
+          "index": 11,
+          "structure": "Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "ent_maffei1.json300638988",
+          "index": 12,
+          "structure": "Entity(Record(  IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "ent_maffei1.json629095437",
+          "index": 13,
+          "structure": "Entity(Record(  value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.issuer-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "ent_maffei1.json1529901710",
+          "index": 14,
+          "structure": "Entity(Record(  IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "ent_maffei1.json812839730",
+          "index": 15,
+          "structure": "Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "act_maffei1.json12",
+          "index": 16,
+          "structure": "Activity(Record(  Join1_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "ent_maffei1.json936120320",
+          "index": 17,
+          "structure": "Entity(Record(  IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "act_maffei1.json17",
+          "index": 18,
+          "structure": "Activity(Record(  Join1_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "ent_maffei1.json2019351673",
+          "index": 19,
+          "structure": "Entity(Record(  BoardInfoFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "act_maffei1.json3",
+          "index": 20,
+          "structure": "Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "activity"
+        },
+        {
+          "name": "ent_maffei1.json298726171",
+          "index": 21,
+          "structure": "Entity(Record(  value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        },
+        {
+          "name": "ent_maffei1.json1",
+          "index": 22,
+          "structure": "Entity(Record(  result-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )",
+          "type": "entity"
+        }
+      ]
+    },
+    {
+      "name": "link-data",
+      "values": [
+        {
+          "card": 3,
+          "source": 16,
+          "target": 3,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 16,
+          "target": 19,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 2,
+          "source": 6,
+          "target": 21,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 11,
+          "target": 4,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 18,
+          "target": 3,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 2,
+          "target": 17,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 10,
+          "target": 3,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 6,
+          "target": 9,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 1,
+          "source": 10,
+          "target": 3,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 20,
+          "target": 5,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 20,
+          "target": 12,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 8,
+          "target": 15,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 18,
+          "target": 22,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 11,
+          "target": 5,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 7,
+          "target": 19,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 1,
+          "target": 13,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 8,
+          "target": 5,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 3,
+          "source": 2,
+          "target": 5,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 2,
+          "source": 10,
+          "target": 9,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 7,
+          "target": 5,
+          "value": 1,
+          "type": "used"
+        },
+        {
+          "card": 3,
+          "source": 1,
+          "target": 9,
+          "value": 1,
+          "type": "wasGeneratedBy"
+        },
+        {
+          "card": 1,
+          "source": 6,
+          "target": 14,
+          "value": 1,
+          "type": "used"
+        }
+      ]}],
+      "scales": [
+        {
+          "name": "color",
+          "type": "ordinal",
+          "domain": {
+            "data": "mapping2",
+            "field": "InfoType"
+          },
+          "range": {
+            "data": "mapping2",
+            "field": "c"
+          }
+        },
+        {
+          "name": "color2",
+          "type": "ordinal",
+          "domain": {
+            "data": "mapping",
+            "field": "InfoType"
+          },
+          "range": {
+            "data": "mapping",
+            "field": "c"
+          }
+        },
+        {
+          "name": "shapes",
+          "type": "ordinal",
+          "domain": {
+            "data": "shapes-mapping",
+            "field": "InfoType"
+          },
+          "range": {
+            "data": "shapes-mapping",
+            "field": "shape"
+          }
+        }
+      ],
+      "marks": [
+        {
+          "name": "nodes",
+          "type": "symbol",
+          "zindex": 1,
+          "from": {
+            "data": "node-data"
+          },
+          "on": [
+            {
+              "trigger": "fix",
+              "modify": "node",
+              "values": "fix === 1 ? {fx:node.x, fy:node.y} : {fx:x(), fy:y()}"
+            },
+            {
+              "trigger": "!fix",
+              "modify": "node",
+              "values": "{fx: null, fy: null}"
+            }
+          ],
+          "encode": {
+            "enter": {
+              "fill": {
+                "scale": "color",
+                "field": "type"
+              },
+              "shape": {
+                "scale": "shapes",
+                "field": "type"
+              },
+              "stroke": {
+                "value": "white"
+              },
+              "text": {
+                "field": "index"
+              }
+            },
+            "update": {
+              "size": {
+                "signal": " nodeRadius * nodeRadius"
+              },
+              "cursor": {
+                "value": "pointer"
+              },
+              "tooltip": {
+                "signal": "'< ' +datum.index+ '  , ' + datum.structure+  '> '"
+              }
+            }
+          },
+          "transform": [
+            {
+              "type": "force",
+              "iterations": 900,
+              "restart": {
+                "signal": "restart"
+              },
+              "static": {
+                "signal": "static"
+              },
+              "forces": [
+                {
+                  "force": "center",
+                  "x": {
+                    "signal": "cx"
+                  },
+                  "y": {
+                    "signal": "cy"
+                  }
+                },
+                {
+                  "force": "collide",
+                  "radius": {
+                    "signal": "nodeRadius"
+                  }
+                },
+                {
+                  "force": "nbody",
+                  "strength": {
+                    "signal": "nodeCharge"
+                  }
+                },
+                {
+                  "force": "link",
+                  "links": "link-data",
+                  "distance": {
+                    "signal": "linkDistance"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nodes-text",
+          "type": "text",
+          "from": {
+            "data": "nodes"
+          },
+          "encode": {
+            "enter": {
+              "baseline": {
+                "value": "middle"
+              },
+              "fontSize": {
+                "value": 9
+              },
+              "fontWeight": {
+                "value": "bold"
+              },
+              "text": {
+                "signal": "datum.tooltip"
+              }
+            },
+            "update": {
+              "x": {
+                "signal": "datum.x+9"
+              },
+              "y": {
+                "signal": "datum.y+1"
+              },
+              "vx": {
+                "signal": "datum.vx+2"
+              },
+              "vy": {
+                "signal": "datum.vy+2"
+              }
+            }
+          }
+        },
+        {
+          "type": "path",
+          "from": {
+            "data": "link-data"
+          },
+          "encode": {
+            "enter": {
+              "stroke": {
+                "scale": "color2",
+                "field": "type"
+              },
+              "strokeWidth": {
+                "value": 1
+              }
+            },
+            "update": {
+              "stroke": {
+                "scale": "color2",
+                "field": "type"
+              },
+              "strokeWidth": [
+                {
+                  "test": "datum.card<10",
+                  "value": 1
+                },
+                {
+                  "test": "datum.card>10 && datum.card<100",
+                  "value": 3
+                },
+                {
+                  "test": "datum.card>100 && datum.card<200",
+                  "value": 6
+                },
+                {
+                  "value": 10
+                }
+              ],
+              "tooltip": {
+                "signal": "' ' +datum.type+','+datum.card+ ' '"
+              }
+            }
+          },
+          "transform": [
+            {
+              "type": "linkpath",
+              "shape": "line",
+              "sourceX": "datum.source.x",
+              "sourceY": "datum.source.y",
+              "targetX": "datum.target.x",
+              "targetY": "datum.target.y"
+            }
+          ]
+        }
+      ],
+      "legends": [
+        {
+          "fill": "color",
+          "padding": 5,
+          "orient": "top-right",
+          "title": "Type of node",
+          "encode": {
+            "title": {
+              "update": {
+                "fontSize": {
+                  "value": 19
+                }
+              }
+            },
+            "labels": {
+              "interactive": true,
+              "update": {
+                "fontSize": {
+                  "value": 15
+                },
+                "fill": {
+                  "value": "black"
+                }
+              },
+              "hover": {
+                "fill": {
+                  "value": "firebrick"
+                }
+              }
+            },
+            "symbols": {
+              "update": {
+                "stroke": {
+                  "value": "transparent"
+                }
+              }
+            }
+          }
+        },
+        {
+          "fill": "color2",
+          "padding": 5,
+          "orient": "top-left",
+          "title": "Type of relationship",
+          "encode": {
+            "title": {
+              "update": {
+                "fontSize": {
+                  "value": 19
+                }
+              }
+            },
+            "labels": {
+              "interactive": true,
+              "update": {
+                "fontSize": {
+                  "value": 15
+                },
+                "fill": {
+                  "value": "black"
+                }
+              },
+              "hover": {
+                "fill": {
+                  "value": "firebrick"
+                }
+              }
+            },
+            "symbols": {
+              "update": {
+                "stroke": {
+                  "value": "transparent"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
