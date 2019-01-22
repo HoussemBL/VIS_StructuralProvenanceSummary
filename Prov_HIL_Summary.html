@@ -1,0 +1,466 @@
+<html>
+<head>
+  <title>Structural summary of Provenance for a data integration process</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.0-beta.38/vega.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.0-beta.6/vega-lite.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.0.0-beta.19/vega-embed.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+</head>
+<body>
+
+  <div id="vis"></div>
+
+  <script type="text/javascript">
+    var y12 = {
+  "$schema": "https://vega.github.io/schema/vega/v4.json",
+  "width": 1200,
+  "height": 1200,
+  "padding": 0,
+  "autosize": "none",
+  "signals": [
+    {
+      "name": "cx",
+      "update": "width / 3"
+    },
+    {
+      "name": "cy",
+      "update": "height / 3"
+    },
+    {
+      "name": "nodeRadius",
+      "value": 17,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 200,
+        "step": 1
+      }
+    },
+    {
+      "name": "nodeCharge",
+      "value": -120,
+      "bind": {
+        "input": "range",
+        "min": -200,
+        "max": 20,
+        "step": 1
+      }
+    },
+    {
+      "name": "linkDistance",
+      "value": 120,
+      "bind": {
+        "input": "range",
+        "min": 5,
+        "max": 250,
+        "step": 1
+      }
+    },
+    {
+      "name": "static",
+      "value": true,
+      "bind": {
+        "input": "checkbox"
+      }
+    },
+    {
+      "description": "State variable for active node fix status.",
+      "name": "fix",
+      "value": 0,
+      "on": [
+        {
+          "events": "symbol:mouseout[!event.buttons], window:mouseup",
+          "update": "0"
+        },
+        {
+          "events": "symbol:mouseover",
+          "update": "fix || 1"
+        },
+        {
+          "events": "[symbol:mousedown, window:mouseup] > window:mousemove!",
+          "update": "2",
+          "force": true
+        }
+      ]
+    },
+    {
+      "description": "Graph node most recently interacted with.",
+      "name": "node",
+      "value": null,
+      "on": [
+        {
+          "events": "symbol:mouseover",
+          "update": "fix === 1 ? item() : node"
+        }
+      ]
+    },
+    {
+      "description": "Flag to restart Force simulation upon data changes.",
+      "name": "restart",
+      "value": false,
+      "on": [
+        {
+          "events": {
+            "signal": "fix"
+          },
+          "update": "fix > 1"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "shapes-mapping",
+      "values": [
+        {
+          "InfoType": "entity",
+          "shape": "circle"
+        },
+        {
+          "InfoType": "activity",
+          "shape": "square"
+        },
+        {
+          "InfoType": "agent",
+          "shape": "diamond"
+        }
+      ]
+    },
+    {
+      "name": "mapping2",
+      "values": [
+        {
+          "InfoType": "entity",
+          "c": "#99d8c9"
+        },
+        {
+          "InfoType": "activity",
+          "c": "#238b45"
+        },
+        {
+          "InfoType": "agent",
+          "c": "blue"
+        }
+      ]
+    },
+    {
+      "name": "mapping",
+      "values": [
+        {
+          "InfoType": "used",
+          "c": "#fdbb84"
+        },
+        {
+          "InfoType": "wasDerivedFrom",
+          "c": "#99d8c9"
+        },
+        {
+          "InfoType": "wasGeneratedBy",
+          "c": "brown"
+        },
+        {
+          "InfoType": "wasInfluencedBy",
+          "c": "green"
+        },
+        {
+          "InfoType": "wasStartedBy",
+          "c": "blue"
+        }
+      ]
+    },
+    {
+      "name": "node-data",
+      "values": [
+        {
+          "name": "xxx",
+          "index": 0,
+          "structure": "Entity(Record(  BoardMemebershipTupleId-\u003e String )",
+          "type": "result2"
+        },
+        {"name":"act_prov_GregoryB_Maffei.json288","index":1,"structure":"Activity(Record(  Join1_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json80","index":2,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json829369615","index":3,"structure":"Entity(Record(  IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.alias-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.normalized_title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json452","index":4,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json274","index":5,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json481","index":6,"structure":"Activity(Record(  Join1_key-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json901869473","index":7,"structure":"Entity(Record(  value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.issuer-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json7","index":8,"structure":"Activity(Record(  Select_Condition_rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json56","index":9,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json435","index":10,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json545973180","index":11,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.title-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json938856503","index":12,"structure":"Entity(Record(  BoardFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json954669583","index":13,"structure":"Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.reportingDate-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json971394214","index":14,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json64","index":15,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json57","index":16,"structure":"Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json810088066","index":17,"structure":"Entity(Record(  IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json692920156","index":18,"structure":"Entity(Record(  cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json436","index":19,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json967324098","index":20,"structure":"Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.alias-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.normalized_title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json991650380","index":21,"structure":"Entity(Record(  board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   name-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json203","index":22,"structure":"Activity(Record(  Join1_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_key-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json856399527","index":23,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json247","index":24,"structure":"Activity(Record(  Select_Condition_personName-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json693766203","index":25,"structure":"Entity(Record(  IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json967977373","index":26,"structure":"Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.alias-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.normalized_title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json84","index":27,"structure":"Activity(Record(  Select_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json929456739","index":28,"structure":"Entity(Record(  value.title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json411","index":29,"structure":"Activity(Record(  Select_Condition_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json437","index":30,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json920340124","index":31,"structure":"Entity(Record(  IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.alias-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.normalized_title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json89620877","index":32,"structure":"Entity(Record(  IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json475","index":33,"structure":"Activity(Record(  Join1_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json996092765","index":34,"structure":"Entity(Record(  value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.issuer-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json975646818","index":35,"structure":"Entity(Record(  IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json815410997","index":36,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.positions-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json971191779","index":37,"structure":"Entity(Record(  value.title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json919786397","index":38,"structure":"Entity(Record(  value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json276","index":39,"structure":"Activity(Record(  Join1_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json957368307","index":40,"structure":"Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json465","index":41,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json99","index":42,"structure":"Activity(Record(  Select_Condition_positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json200","index":43,"structure":"Activity(Record(  Join1_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_key-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json82","index":44,"structure":"Activity(Record(  Join1_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json703578793","index":45,"structure":"Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.alias-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.normalized_title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.reportingDate-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json9969340","index":46,"structure":"Entity(Record(  IRP_id.issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json287","index":47,"structure":"Activity(Record(  Select_Condition_employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json480","index":48,"structure":"Activity(Record(  Join1_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json126","index":49,"structure":"Activity(Record(  Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json466","index":50,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json567377518","index":51,"structure":"Entity(Record(  PositionInfoFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json98","index":52,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json689679791","index":53,"structure":"Entity(Record(  BoardInfoFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_GregoryB_Maffei.json438","index":54,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json9","index":55,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json458","index":56,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_GregoryB_Maffei.json8","index":57,"structure":"Activity(Record(  Join1_ProvenanceTuple-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_GregoryB_Maffei.json885632731","index":58,"structure":"Entity(Record(  value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   IRP_id.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json56251979","index":59,"structure":"Entity(Record(  personName-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json692303569","index":60,"structure":"Entity(Record(  PositionsFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json504258004","index":61,"structure":"Entity(Record(  EmploymentFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_GregoryB_Maffei.json1","index":62,"structure":"Entity(Record(  result-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"}]
+    },
+    {
+      "name": "link-data",
+      "values": [{"card":3,"source":15,"target":35,"value":1,"type":"used"},{"card":5,"source":27,"target":23,"value":1,"type":"used"},{"card":5,"source":16,"target":14,"value":1,"type":"used"},{"card":1,"source":52,"target":38,"value":1,"type":"used"},{"card":5,"source":41,"target":3,"value":1,"type":"used"},{"card":5,"source":9,"target":34,"value":1,"type":"used"},{"card":5,"source":8,"target":51,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":6,"target":62,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":49,"target":18,"value":1,"type":"used"},{"card":5,"source":24,"target":59,"value":1,"type":"used"},{"card":5,"source":41,"target":20,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":19,"target":40,"value":1,"type":"used"},{"card":5,"source":30,"target":13,"value":1,"type":"used"},{"card":5,"source":29,"target":21,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":24,"target":59,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":49,"target":21,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":50,"target":20,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":29,"target":59,"value":1,"type":"used"},{"card":5,"source":39,"target":51,"value":1,"type":"used"},{"card":5,"source":22,"target":21,"value":1,"type":"used"},{"card":5,"source":10,"target":14,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":15,"target":23,"value":1,"type":"wasGeneratedBy"},{"card":4,"source":52,"target":17,"value":1,"type":"used"},{"card":5,"source":22,"target":21,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":6,"target":21,"value":1,"type":"used"},{"card":5,"source":19,"target":14,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":2,"target":7,"value":1,"type":"used"},{"card":5,"source":44,"target":12,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":55,"target":28,"value":1,"type":"used"},{"card":5,"source":5,"target":18,"value":1,"type":"wasGeneratedBy"},{"card":4,"source":47,"target":36,"value":1,"type":"used"},{"card":5,"source":48,"target":12,"value":1,"type":"used"},{"card":1,"source":47,"target":61,"value":1,"type":"used"},{"card":5,"source":52,"target":36,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":47,"target":61,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":39,"target":60,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":10,"target":46,"value":1,"type":"used"},{"card":5,"source":2,"target":36,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":33,"target":61,"value":1,"type":"used"},{"card":5,"source":57,"target":11,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":1,"target":61,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":54,"target":32,"value":1,"type":"used"},{"card":5,"source":16,"target":53,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":44,"target":53,"value":1,"type":"used"},{"card":5,"source":30,"target":14,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":9,"target":23,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":1,"target":60,"value":1,"type":"used"},{"card":5,"source":56,"target":20,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":54,"target":14,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":57,"target":37,"value":1,"type":"used"},{"card":5,"source":55,"target":11,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":8,"target":20,"value":1,"type":"used"},{"card":5,"source":42,"target":60,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":33,"target":62,"value":1,"type":"wasGeneratedBy"},{"card":2,"source":42,"target":60,"value":1,"type":"used"},{"card":5,"source":27,"target":12,"value":1,"type":"wasGeneratedBy"},{"card":3,"source":42,"target":11,"value":1,"type":"used"},{"card":5,"source":56,"target":45,"value":1,"type":"used"},{"card":5,"source":50,"target":26,"value":1,"type":"used"},{"card":5,"source":4,"target":31,"value":1,"type":"used"},{"card":5,"source":43,"target":21,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":4,"target":20,"value":1,"type":"wasGeneratedBy"},{"card":5,"source":5,"target":25,"value":1,"type":"used"},{"card":5,"source":48,"target":62,"value":1,"type":"wasGeneratedBy"},{"card":2,"source":15,"target":58,"value":1,"type":"used"},{"card":5,"source":43,"target":21,"value":1,"type":"used"}]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {
+        "data": "mapping2",
+        "field": "InfoType"
+      },
+      "range": {
+        "data": "mapping2",
+        "field": "c"
+      }
+    },
+    {
+      "name": "color2",
+      "type": "ordinal",
+      "domain": {
+        "data": "mapping",
+        "field": "InfoType"
+      },
+      "range": {
+        "data": "mapping",
+        "field": "c"
+      }
+    },
+    {
+      "name": "shapes",
+      "type": "ordinal",
+      "domain": {
+        "data": "shapes-mapping",
+        "field": "InfoType"
+      },
+      "range": {
+        "data": "shapes-mapping",
+        "field": "shape"
+      }
+    }
+  ],
+  "marks": [
+    {
+      "name": "nodes",
+      "type": "symbol",
+      "zindex": 1,
+      "from": {
+        "data": "node-data"
+      },
+      "on": [
+        {
+          "trigger": "fix",
+          "modify": "node",
+          "values": "fix === 1 ? {fx:node.x, fy:node.y} : {fx:x(), fy:y()}"
+        },
+        {
+          "trigger": "!fix",
+          "modify": "node",
+          "values": "{fx: null, fy: null}"
+        }
+      ],
+      "encode": {
+        "enter": {
+          "fill": {
+            "scale": "color",
+            "field": "type"
+          },
+          "shape": {
+            "scale": "shapes",
+            "field": "type"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "text": {
+            "field": "index"
+          }
+        },
+        "update": {
+          "size": {
+            "signal": " nodeRadius * nodeRadius"
+          },
+          "cursor": {
+            "value": "pointer"
+          },
+          "tooltip": {
+            "signal": "'< ' +datum.index+ '  , ' + datum.structure+  '> '"
+          }
+        }
+      },
+      "transform": [
+        {
+          "type": "force",
+          "iterations": 900,
+          "restart": {
+            "signal": "restart"
+          },
+          "static": false,
+          "forces": [
+            {
+              "force": "center",
+              "x": {
+                "signal": "cx"
+              },
+              "y": {
+                "signal": "cy"
+              }
+            },
+            {
+              "force": "collide",
+              "radius": 
+               17
+              
+            },
+            {
+              "force": "nbody",
+              "strength": -13
+            },
+            {
+              "force": "link",
+              "links": "link-data",
+              "distance": 
+                 25
+              
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "from": {
+        "data": "link-data"
+      },
+      "encode": {
+        "enter": {
+          "stroke": {
+            "scale": "color2",
+            "field": "type"
+          },
+          "strokeWidth": {
+            "value": 1
+          }
+        },
+        "update": {
+          "stroke": {
+            "scale": "color2",
+            "field": "type"
+          },
+          "strokeWidth": [
+            {
+              "test": "datum.card<10",
+              "value": 1
+            },
+            {
+              "test": "datum.card>10 && datum.card<100",
+              "value": 3
+            },
+            {
+              "test": "datum.card>100 && datum.card<200",
+              "value": 6
+            },
+            {
+              "value": 10
+            }
+          ],
+          "tooltip": {
+            "signal": "' ' +datum.type+','+datum.card+ ' '"
+          }
+        }
+      },
+      "transform": [
+        {
+          "type": "linkpath",
+          "shape": "line",
+          "sourceX": "datum.source.x",
+          "sourceY": "datum.source.y",
+          "targetX": "datum.target.x",
+          "targetY": "datum.target.y"
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "padding": 5,
+      "orient": "top-right",
+      "title": "Type of node",
+      "encode": {
+        "title": {
+          "update": {
+            "fontSize": {
+              "value": 19
+            }
+          }
+        },
+        "labels": {
+          "interactive": true,
+          "update": {
+            "fontSize": {
+              "value": 15
+            },
+            "fill": {
+              "value": "black"
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "firebrick"
+            }
+          }
+        },
+        "symbols": {
+          "update": {
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    },
+    {
+      "fill": "color2",
+      "padding": 5,
+      "orient": "top-left",
+      "title": "Type of relationship",
+      "encode": {
+        "title": {
+          "update": {
+            "fontSize": {
+              "value": 19
+            }
+          }
+        },
+        "labels": {
+          "interactive": true,
+          "update": {
+            "fontSize": {
+              "value": 15
+            },
+            "fill": {
+              "value": "black"
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "firebrick"
+            }
+          }
+        },
+        "symbols": {
+          "update": {
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    }
+  ]
+};
+var tooltipOptions = {
+  theme: 'dark'
+};
+
+ var handler = new vegaTooltip.Handler(tooltipOptions);
+var runtime = vega.parse(y12);
+var view = new vega.View(runtime)
+.tooltip(handler.call)
+  .initialize(document.getElementById("vis"))
+  .run();
+
+    // vega.embed("#vis", y12)
+    // .tooltip(handler.call).update;
+//     .hover().addEventListener('click', function(event, item) {
+//       open('https://watson.analytics.ibmcloud.com/product','_self')
+
+// });;
+  </script>
+</body>
+</html>
