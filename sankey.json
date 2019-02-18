@@ -1,116 +1,99 @@
-{"nodes":[
-       {
-          "name": "Ent-St1",
-        "structure": "Entity(Record(  foaf:name-->Record(  $-->Str   type-->Str )   prov:type-->Array(Record(  $-->Str   type-->Str ) ,Record(  $-->Str   type-->Str ))  )",
-           "node": 0
-        },
-        {
-          "name": "Act-St1",
-          "structure": "Activity(Record(  kimlab:verse-intergenic-->Record(  $-->Str   type-->Str )   kimlab:verse-id-attribute-->Record(  $-->Str   type-->Str )   kimlab:verse-stranded-->Record(  $-->Str   type-->Str )   kimlab:verse-introns-->Record(  $-->Str   type-->Str )   kimlab:verse-lines-sines-->Record(  $-->Str   type-->Str ) ) )",
-           "node": 1
-        
-          
-        },
-        
-        {
-          "name": "Act-St2",
-           "node": 2,
-           "structure": "Activity(Record(  kimlab:trim-contamfile-->Record(  $-->Str   type-->Str )   kimlab:trim-minlen-->Record(  $-->Str   type-->Str )   kimlab:trim-num-at-->Record(  $-->Str   type-->Str )   kimlab:trim-remove-n-->Record(  $-->Str   type-->Str ) ) )"
-        },
-        
-        {
-          "name": "Act-St3",
-           
-           "node": 3,
-           "structure": "Activity(Record(  kimlab:star-species-genome-->Record(  $-->Str   type-->Str ) ) )"
-        },
-        {
-          "name": "Act-St4",
-          "structure": "Activity(Record(  kimlab:star-readlength-->Record(  $-->Str   type-->Str )   kimlab:star-se-->Record(  $-->Str   type-->Str )   kimlab:star-species-genome-->Record(  $-->Str   type-->Str ) ) )",
-           "node": 4
-        },
-        {
-          "name": "Act-St5",
-          "structure": "Activity(Record(  kimlab:htseq-stranded-->Record(  $-->Str   type-->Str ) ) )",
-           "node": 5
-        },
-        {
-          "name": "Act-St6",
-           "node": 6,
-           "structure":"Activity(Record(  kimlab:verse-intergenic-->Record(  $-->Str   type-->Str )   kimlab:verse-id-attribute-->Record(  $-->Str   type-->Str )   kimlab:verse-stranded-->Record(  $-->Str   type-->Str )   kimlab:verse-introns-->Record(  $-->Str   type-->Str )   kimlab:verse-lines-sines-->Record(  $-->Str   type-->Str ) ) )" 
-        },
-        {
-          "name": "Act-St7",
-           "structure": "Activity(Record(  kimlab:trim-minlen-->Record(  $-->Str   type-->Str )   kimlab:trim-phred-thresh-->Record(  $-->Str   type-->Str )   kimlab:trim-remove-n-->Record(  $-->Str   type-->Str )   kimlab:trim-contamfile-->Record(  $-->Str   type-->Str )   kimlab:trim-num-at-->Record(  $-->Str   type-->Str ) ) )",
-           "node": 7
-        },
-       
-        {
-          "name": "Act-St8",
-          "structure": "Activity(Record(  kimlab:trim-minlen-->Record(  $-->Str   type-->Str )   kimlab:trim-phred-thresh-->Record(  $-->Str   type-->Str )   kimlab:trim-remove-n-->Record(  $-->Str   type-->Str )   kimlab:trim-se-->Record(  $-->Str   type-->Str )   kimlab:trim-contamfile-->Record(  $-->Str   type-->Str )   kimlab:trim-num-at-->Record(  $-->Str   type-->Str ) ) )",
-           "node": 8
-        }
-    ],
-"links":[
-
-
-        {
-           "value": 718,
-          "source": 1,
-          "target": 0,
-         
-          "type": "wasGeneratedBy"
-        },
-      
-        {
-           "value": 103,
-          "source": 3,
-          "target": 0,
-         
-          "type": "wasGeneratedBy"
-        },
-        {
-           "value": 2,
-          "source": 4,
-          "target": 0,
-         
-          "type": "wasGeneratedBy"
-        },
-  
-        {
-           "value": 103,
-          "source": 5,
-          "target": 0,
-         
-          "type": "wasGeneratedBy"
-        },
-        
-        {
-           "value": 101,
-          "source": 2,
-          "target": 0,
-         
-          "type": "wasGeneratedBy"
-        },{
-           "value": 701,
-          "source": 6,
-          "target": 0,        
-          "type": "wasGeneratedBy"
-        },
-      
-        {
-           "value": 245,
-          "source": 7,
-          "target": 0,  
-          "type": "wasGeneratedBy"
-        },
-        
-        {
-           "value": 466,
-          "source": 8,
-          "target": 0,
-         
-          "type": "wasGeneratedBy"
-        }
-]}
-
+{
+	"nodes":[
+		{
+			"name":"Ent-St1",
+			"structure":"Entity(Record(  foaf:name-->Record(  $-->Str   type-->Str )   prov:type-->Array(Record(  $-->Str   type-->Str ) ,Record(  $-->Str   type-->Str ))  )",
+			"node":0
+		},
+		{
+			"name":"Act-St1",
+			"structure":"Activity(Record(  kimlab:verse-intergenic-->Record(  $-->Str   type-->Str )   kimlab:verse-id-attribute-->Record(  $-->Str   type-->Str )   kimlab:verse-stranded-->Record(  $-->Str   type-->Str )   kimlab:verse-introns-->Record(  $-->Str   type-->Str )   kimlab:verse-lines-sines-->Record(  $-->Str   type-->Str ) ) )",
+			"node":1
+		},
+		{
+			"name":"Act-St2",
+			"node":2,
+			"structure":"Activity(Record(  kimlab:trim-contamfile-->Record(  $-->Str   type-->Str )   kimlab:trim-minlen-->Record(  $-->Str   type-->Str )   kimlab:trim-num-at-->Record(  $-->Str   type-->Str )   kimlab:trim-remove-n-->Record(  $-->Str   type-->Str ) ) )"
+		},
+		{
+			"name":"Act-St3",
+			"node":3,
+			"structure":"Activity(Record(  kimlab:star-species-genome-->Record(  $-->Str   type-->Str ) ) )"
+		},
+		{
+			"name":"Act-St4",
+			"structure":"Activity(Record(  kimlab:star-readlength-->Record(  $-->Str   type-->Str )   kimlab:star-se-->Record(  $-->Str   type-->Str )   kimlab:star-species-genome-->Record(  $-->Str   type-->Str ) ) )",
+			"node":4
+		},
+		{
+			"name":"Act-St5",
+			"structure":"Activity(Record(  kimlab:htseq-stranded-->Record(  $-->Str   type-->Str ) ) )",
+			"node":5
+		},
+		{
+			"name":"Act-St6",
+			"node":6,
+			"structure":"Activity(Record(  kimlab:verse-intergenic-->Record(  $-->Str   type-->Str )   kimlab:verse-id-attribute-->Record(  $-->Str   type-->Str )   kimlab:verse-stranded-->Record(  $-->Str   type-->Str )   kimlab:verse-introns-->Record(  $-->Str   type-->Str )   kimlab:verse-lines-sines-->Record(  $-->Str   type-->Str ) ) )"
+		},
+		{
+			"name":"Act-St7",
+			"structure":"Activity(Record(  kimlab:trim-minlen-->Record(  $-->Str   type-->Str )   kimlab:trim-phred-thresh-->Record(  $-->Str   type-->Str )   kimlab:trim-remove-n-->Record(  $-->Str   type-->Str )   kimlab:trim-contamfile-->Record(  $-->Str   type-->Str )   kimlab:trim-num-at-->Record(  $-->Str   type-->Str ) ) )",
+			"node":7
+		},
+		{
+			"name":"Act-St8",
+			"structure":"Activity(Record(  kimlab:trim-minlen-->Record(  $-->Str   type-->Str )   kimlab:trim-phred-thresh-->Record(  $-->Str   type-->Str )   kimlab:trim-remove-n-->Record(  $-->Str   type-->Str )   kimlab:trim-se-->Record(  $-->Str   type-->Str )   kimlab:trim-contamfile-->Record(  $-->Str   type-->Str )   kimlab:trim-num-at-->Record(  $-->Str   type-->Str ) ) )",
+			"node":8
+		}
+	],
+	"links":[
+		{
+			"value":718,
+			"source":1,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":103,
+			"source":3,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":2,
+			"source":4,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":103,
+			"source":5,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":101,
+			"source":2,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":701,
+			"source":6,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":245,
+			"source":7,
+			"target":0,
+			"type":"wasGeneratedBy"
+		},
+		{
+			"value":466,
+			"source":8,
+			"target":0,
+			"type":"wasGeneratedBy"
+		}
+	]
+}
