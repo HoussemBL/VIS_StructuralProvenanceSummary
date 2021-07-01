@@ -12,7 +12,7 @@
   <div id="vis"></div>
 
   <script type="text/javascript">
-    var y12 = {
+    var visCode = {
   "$schema": "https://vega.github.io/schema/vega/v4.json",
   "width": 1200,
   "height": 1200,
@@ -449,7 +449,7 @@ var tooltipOptions = {
 };
 
  var handler = new vegaTooltip.Handler(tooltipOptions);
-var runtime = vega.parse(y12);
+var runtime = vega.parse(visCode);
 var view = new vega.View(runtime)
 .tooltip(handler.call)
   .initialize(document.getElementById("vis"))
