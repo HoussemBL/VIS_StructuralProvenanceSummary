@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <script src="http://vega.github.io/vega-editor/vendor/d3.min.js" charset="utf-8"></script>
+<script src="http://vega.github.io/vega-editor/vendor/vega.js" charset="utf-8"></script>
+<script src="http://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+</head>
+<body>
+
+<div id="vis"></div>
+
+<script type="text/javascript">
+  var spec = {
+  "width": 750,
+  "height": 750,
+  "data": [
+    {
+      "name": "nodes",
+      "values": [
+        {"name": "APT","group": 1,"index": 0},
+        {
+          "name": "CAPEC-3.0",
+          "group": 1,
+          "index": 1,
+          "order": 1
+        },
+        {
+          "name": "CAPEC-3.1",
+          "group": 1,
+          "index": 2,
+          "order": 2
+        },
+        {
+          "name": "CAPEC-3.2",
+          "group": 1,
+          "index": 3,
+          "order": 3
+        },
+        {
+          "name": "CAPEC-3.3",
+          "group": 1,
+          "index": 4,
+          "order": 4
+        },
+        {"name": "CVRF","group": 1,"index": 5,"order": 5},
+        {
+          "name": "IODEF-1.0",
+          "group": 1,
+          "index": 6,
+          "order": 6
+        },
+        {
+          "name": "IODEF-2.0",
+          "group": 1,
+          "index": 7,
+          "order": 7
+        },
+        {"name": "IDEMF","group": 1,"index": 8,"order": 8},
+        {
+          "name": "OVAL-5.0",
+          "group": 1,
+          "index": 9,
+          "order": 9
+        },
+        {
+          "name": "OVAL-5.1",
+          "group": 1,
+          "index": 10,
+          "order": 10
+        },
+        {
+          "name": "OVAL-5.2",
+          "group": 1,
+          "index": 11,
+          "order": 11
+        },
+        {
+          "name": "OVAL-5.3",
+          "group": 1,
+          "index": 12,
+          "order": 12
+        },
+        {
+          "name": "OVAL-5.4",
+          "group": 1,
+          "index": 13,
+          "order": 13
+        },
+        {
+          "name": "OVAL-5.5",
+          "group": 1,
+          "index": 14,
+          "order": 14
+        },
+        {
+          "name": "OVAL-5.6",
+          "group": 1,
+          "index": 15,
+          "order": 15
+        },
+        {
+          "name": "OVAL-5.7",
+          "group": 1,
+          "index": 16,
+          "order": 16
+        },
+        {
+          "name": "OVAL-5.8",
+          "group": 1,
+          "index": 17,
+          "order": 17
+        },
+        {
+          "name": "OVAL-5.9",
+          "group": 1,
+          "index": 18,
+          "order": 18
+        },
+        {
+          "name": "OVAL-5.10",
+          "group": 1,
+          "index": 19,
+          "order": 19
+        },
+        {
+          "name": "OVAL-5.10.1",
+          "group": 1,
+          "index": 20,
+          "order": 20
+        },
+        {
+          "name": "OVAL-5.11",
+          "group": 1,
+          "index": 21,
+          "order": 21
+        },
+        {
+          "name": "OVAL-5.11.1",
+          "group": 1,
+          "index": 22,
+          "order": 22
+        },
+        {
+          "name": "OVAL-5.11.2",
+          "group": 1,
+          "index": 23,
+          "order": 23
+        },
+        {"name": "SNORT","group": 1,"index": 24,"order": 24},
+        {
+          "name": "STIX-2.0",
+          "group": 1,
+          "index": 25,
+          "order": 25
+        },
+        {
+          "name": "STIX-2.1",
+          "group": 1,
+          "index": 26,
+          "order": 26
+        },
+        {
+          "name": "SURICATA",
+          "group": 1,
+          "index": 27,
+          "order": 27
+        },
+        {"name": "VERIS","group": 1,"index": 28,"order": 28},
+        {"name": "CVE","group": 1,"index": 29,"order": 29},
+        {
+          "name": "CVE-4.0",
+          "group": 1,
+          "index": 30,
+          "order": 30
+        },
+        {"name": "CWE","group": 1,"index": 31,"order": 31},
+        {"name": "MAEC","group": 1,"index": 32,"order": 32},
+        {
+          "name": "OPENIOC-1.0",
+          "group": 1,
+          "index": 33,
+          "order": 33
+        },
+        {
+          "name": "OPENIOC-1.1",
+          "group": 1,
+          "index": 34,
+          "order": 34
+        },
+        {
+          "name": "ReputationLists",
+          "group": 1,
+          "index": 35,
+          "order": 35
+        },
+        {"name": "YARA","group": 1,"index": 36,"order": 36},
+        {
+          "name": "STIX1.0",
+          "group": 1,
+          "index": 37,
+          "order": 37
+        },
+        {"name": "Sigma","group": 1,"index": 38,"order": 38}
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "field": "order",
+          "expr": "datum.order == null ? datum.index : datum.order"
+        },
+        {
+          "type": "formula",
+          "field": "order",
+          "expr": "if(dragging && datum._id === dest._id, src.order, datum.order)"
+        },
+        {
+          "type": "formula",
+          "field": "order",
+          "expr": "if(dragging && datum._id === src._id, destOrder, datum.order)"
+        }
+      ]
+    },
+    {
+      "name": "edges",
+      "values": [
+        {
+          "source": 0,
+          "target": 25,
+          "value": 0,
+          "url": "https://oasis-open.github.io/cti-documentation/examples/defining-campaign-ta-is.html"
+        },
+        {
+          "source": 0,
+          "target": 26,
+          "value": 0,
+          "url": "https://oasis-open.github.io/cti-documentation/examples/defining-campaign-ta-is.html"
+        },
+        {
+          "source": 25,
+          "target": 0,
+          "value": 0,
+          "url": "https://oasis-open.github.io/cti-documentation/examples/defining-campaign-ta-is.html"
+        },
+        {
+          "source": 26,
+          "target": 0,
+          "value": 0,
+          "url": "https://oasis-open.github.io/cti-documentation/examples/defining-campaign-ta-is.html"
+        },
+        {
+          "source": 1,
+          "target": 29,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 1,
+          "target": 30,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 1,
+          "target": 31,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 2,
+          "target": 29,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 2,
+          "target": 30,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 2,
+          "target": 31,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 3,
+          "target": 29,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 3,
+          "target": 30,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 3,
+          "target": 31,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 4,
+          "target": 29,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 4,
+          "target": 30,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 4,
+          "target": 31,
+          "value": 0,
+          "url": "https://securityintelligence.com/capec-making-heads-or-tails-of-attack-patterns/"
+        },
+        {
+          "source": 5,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 5,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 5,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 5,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 5,
+          "target": 29,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 5,
+          "target": 30,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 5,
+          "target": 31,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 5,
+          "target": 37,
+          "value": 0,
+          "url": "https://stixproject.github.io/data-model/1.2/et/VulnerabilityType/"
+        },
+        {
+          "source": 6,
+          "target": 25,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 6,
+          "target": 26,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 25,
+          "target": 6,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 26,
+          "target": 6,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 7,
+          "target": 25,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 7,
+          "target": 26,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 25,
+          "target": 7,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {
+          "source": 26,
+          "target": 7,
+          "value": 0,
+          "url": "https://github.com/milewg/iodef2stix"
+        },
+        {"source": 8,"target": 25,"value": 0},
+        {"source": 8,"target": 26,"value": 0},
+        {"source": 25,"target": 8,"value": 0},
+        {"source": 26,"target": 8,"value": 0},
+        {
+          "source": 8,
+          "target": 29,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 8,
+          "target": 30,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 9,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 9,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 9,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 9,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 10,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 10,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 10,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 10,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 11,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 11,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 11,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 11,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 12,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 12,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 12,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 12,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 13,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 13,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 13,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 13,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 14,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 14,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 14,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 14,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 15,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 15,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 15,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 15,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 16,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 16,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 16,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 16,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 17,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 17,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 17,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 17,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 18,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 18,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 18,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 18,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 19,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 19,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 19,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 19,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 20,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 20,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 20,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 20,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 21,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 21,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 21,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 21,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 22,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 22,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 22,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 22,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 23,
+          "target": 25,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 23,
+          "target": 26,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 23,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 26,
+          "target": 23,
+          "value": 0,
+          "url": "http://docs.oasis-open.org/cti/stix/v1.2.1/cs01/part1-overview/stix-v1.2.1-cs01-part1-overview.html#_Toc450907050"
+        },
+        {
+          "source": 25,
+          "target": 24,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 26,
+          "target": 24,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {"source": 25,"target": 26,"value": 0},
+        {"source": 26,"target": 25,"value": 0},
+        {
+          "source": 28,
+          "target": 29,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 32,
+          "target": 29,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 29,
+          "target": 32,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 32,
+          "target": 30,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {
+          "source": 30,
+          "target": 32,
+          "value": 0,
+          "url": "https://www.enisa.europa.eu/publications/standards-and-tools-for-exchange-and-processing-of-actionable-information"
+        },
+        {"source": 32,"target": 25,"value": 0},
+        {"source": 32,"target": 26,"value": 0},
+        {"source": 25,"target": 32,"value": 0},
+        {"source": 26,"target": 32,"value": 0},
+        {
+          "source": 32,
+          "target": 16,
+          "value": 0,
+          "url": "https://github.com/MAECProject/maec-to-oval/blob/master/example/oval_output.xml"
+        },
+        {"source": 33,"target": 26,"value": 0},
+        {"source": 25,"target": 33,"value": 0},
+        {"source": 26,"target": 33,"value": 0},
+        {"source": 33,"target": 25,"value": 0},
+        {"source": 34,"target": 26,"value": 0},
+        {"source": 25,"target": 34,"value": 0},
+        {"source": 26,"target": 34,"value": 0},
+        {"source": 34,"target": 25,"value": 0},
+        {"source": 35,"target": 26,"value": 0},
+        {"source": 25,"target": 35,"value": 0},
+        {"source": 26,"target": 35,"value": 0},
+        {"source": 35,"target": 25,"value": 0},
+        {"source": 25,"target": 36,"value": 0},
+        {"source": 26,"target": 36,"value": 0},
+        {"source": 25,"target": 27,"value": 0},
+        {"source": 26,"target": 27,"value": 0},
+        {"source": 28,"target": 26,"value": 0},
+        {"source": 25,"target": 28,"value": 0},
+        {"source": 26,"target": 28,"value": 0},
+        {"source": 28,"target": 25,"value": 0},
+        {"source": 0,"target": 0,"value": 10},
+        {"source": 1,"target": 1,"value": 10},
+        {"source": 2,"target": 2,"value": 10},
+        {"source": 3,"target": 3,"value": 10},
+        {"source": 4,"target": 4,"value": 10},
+        {"source": 5,"target": 5,"value": 10},
+        {"source": 6,"target": 6,"value": 10},
+        {"source": 7,"target": 7,"value": 10},
+        {"source": 8,"target": 8,"value": 10},
+        {"source": 9,"target": 9,"value": 10},
+        {"source": 10,"target": 10,"value": 10},
+        {"source": 11,"target": 11,"value": 10},
+        {"source": 12,"target": 12,"value": 10},
+        {"source": 13,"target": 13,"value": 10},
+        {"source": 14,"target": 14,"value": 10},
+        {"source": 15,"target": 15,"value": 10},
+        {"source": 16,"target": 16,"value": 10},
+        {"source": 17,"target": 17,"value": 10},
+        {"source": 18,"target": 18,"value": 10},
+        {"source": 19,"target": 19,"value": 10},
+        {"source": 20,"target": 20,"value": 10},
+        {"source": 21,"target": 21,"value": 10},
+        {"source": 22,"target": 22,"value": 10},
+        {"source": 23,"target": 23,"value": 10},
+        {"source": 24,"target": 24,"value": 10},
+        {"source": 25,"target": 25,"value": 10},
+        {"source": 26,"target": 26,"value": 10},
+        {"source": 27,"target": 27,"value": 10},
+        {"source": 28,"target": 28,"value": 10},
+        {"source": 29,"target": 29,"value": 10},
+        {"source": 30,"target": 30,"value": 10},
+        {"source": 31,"target": 31,"value": 10},
+        {"source": 32,"target": 32,"value": 10},
+        {"source": 33,"target": 33,"value": 10},
+        {"source": 34,"target": 34,"value": 10},
+        {"source": 35,"target": 35,"value": 10},
+        {"source": 36,"target": 36,"value": 10},
+        {
+          "source": 37,
+          "target": 26,
+          "value": 0,
+          "url": "https://github.com/oasis-open/cti-stix-elevator"
+        },
+        {"source": 25,"target": 37,"value": 0},
+        {"source": 26,"target": 37,"value": 0},
+        {
+          "source": 37,
+          "target": 25,
+          "value": 0,
+          "url": "https://github.com/oasis-open/cti-stix-elevator"
+        },
+        {"source": 37,"target": 37,"value": 10},
+        {
+          "source": 32,
+          "target": 37,
+          "value": 0,
+          "url": "https://github.com/MAECProject/maec-to-stix"
+        },
+        {
+          "source": 33,
+          "target": 37,
+          "value": 0,
+          "url": "https://github.com/STIXProject/openioc-to-stix"
+        },
+        {"source": 25,"target": 38,"value": 0},
+        {"source": 26,"target": 38,"value": 0},
+        {"source": 38,"target": 38,"value": 10}
+      ],
+      "transform": [
+        {
+          "type": "lookup",
+          "on": "nodes",
+          "onKey": "index",
+          "keys": ["source","target"],
+          "as": ["s","t"]
+        },
+        {
+          "type": "formula",
+          "field": "adjacent",
+          "expr": "datum.s.group === datum.t.group ? datum.s.group : null"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "name": "tooltip",
+      "init": {},
+      "streams": [
+        {"type": "rect:dblclick","expr": "open(datum.url)"},
+        {"type": "rect:mouseover","expr": "datum.url"},
+        {"type": "rect:mouseout","expr": "{}"}
+      ]
+    },
+    {
+      "name": "src",
+      "init": {},
+      "streams": [
+        {"type": "@label:mousedown","expr": "datum"},
+        {"type": "window:mouseup","expr": "{}"}
+      ]
+    },
+    {
+      "name": "dest",
+      "init": {},
+      "streams": [
+        {
+          "type": "@label:mouseover[src._id != null]",
+          "expr": "datum"
+        },
+        {"type": "@label:mouseout","expr": "{}"}
+      ]
+    },
+    {"name": "destOrder","expr": "dest.order"},
+    {"name": "dragging","expr": "src._id && dest._id"}
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "ordinal",
+      "domain": {"data": "nodes","field": "order","sort": true},
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "type": "ordinal",
+      "domain": {"data": "nodes","field": "order","sort": true},
+      "range": "height"
+    },
+    {
+      "name": "c",
+      "type": "ordinal",
+      "domain": {"data": "nodes","field": "group"},
+      "range": "category20"
+    },
+    {
+      "name": "labels",
+      "type": "ordinal",
+      "domain": {"data": "nodes","field": "order"},
+      "range": {"data": "nodes","field": "name"}
+    },
+    {
+      "name": "c2",
+      "type": "ordinal",
+      "domain": [],
+      "range": []
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "nodes","transform": [{"type": "cross"}]},
+      "properties": {
+        "update": {
+          "x": {"scale": "x","field": "a.order"},
+          "y": {"scale": "y","field": "b.order"},
+          "width": {"scale": "x","band": true,"offset": -1},
+          "height": {"scale": "y","band": true,"offset": -1},
+          "fill": [
+            {
+              "test": "datum.a._id == datum.b._id",
+              "scale": "c",
+              "field": "a.group"
+            },
+            {
+              "test": "datum.a._id == src._id",
+              "value": "#ddd"
+            },
+            {
+              "test": "datum.b._id == src._id",
+              "value": "#ddd"
+            },
+            {"value": "#eee"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "edges"},
+      "properties": {
+        "update": {
+          "x": {"scale": "x","field": "t.order"},
+          "width": {"scale": "x","band": true,"offset": -1},
+          "y": {"scale": "y","field": "s.order"},
+          "height": {"scale": "y","band": true,"offset": -1},
+          "fill": [
+            {
+              "test": "datum.value == '10'",
+              "value": "#636363"
+            },
+            {"value": "#3182bd"}
+          ]
+        },
+        "tooltip": {"signal": "datum.url"}
+      }
+    },
+    {
+      "name": "label",
+      "type": "text",
+      "from": {"data": "nodes"},
+      "properties": {
+        "update": {
+          "x": {"scale": "x","field": "order"},
+          "y": {"value": -5},
+          "dy": {"scale": "x","band": true,"mult": 0.5},
+          "text": {"field": "name"},
+          "fontSize": {"value": 10},
+          "angle": {"value": -90},
+          "align": {"value": "left"},
+          "fill": [
+            {"test": "datum._id == src._id","value": "red"},
+            {"value": "black"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "label",
+      "type": "text",
+      "from": {"data": "nodes"},
+      "properties": {
+        "update": {
+          "x": {"value": -5},
+          "y": {"scale": "y","field": "order"},
+          "dy": {"scale": "y","band": true,"mult": 0.5},
+          "text": {"field": "name"},
+          "fontSize": {"value": 10},
+          "align": {"value": "right"},
+          "fill": [
+            {"test": "datum._id == src._id","value": "red"},
+            {"value": "black"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "title",
+      "type": "text",
+    
+      "properties": {
+        "update": {
+          "x": {"value": -15},
+          "y": {"value": 10},
+        
+          "dy": {"value": -7},
+           "angle" : {"value": 0},
+          "text": {"value": "Source"},
+          "fontSize": {"value": 12},
+          "align": {"value": "right"},
+          "fill": [
+         
+            {"value": "blue"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "title1",
+      "type": "text",
+    
+      "properties": {
+        "update": {
+           "angle" : {"value": -90},
+          "x": {"value": 20},
+          "y": {"value": -50},
+          "dy": {"value": -20},
+          "text": {"value": "Target"},
+          "fontSize": {"value": 12},
+          "align": {"value": "right"},
+          "fill": [
+         
+            {"value": "blue"}
+          ]
+        }
+      }
+    }
+  ]
+}
+
+;
+ vg.embed('#vis', spec, function(error, result) {
+  // Callback receiving the View instance and parsed Vega spec
+  // result.view is the View, which resides under the '#vis' element
+  // result.spec is the parsed spec
+});
+</script>
+</body>
+</html>
