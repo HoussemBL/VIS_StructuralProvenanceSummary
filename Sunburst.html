@@ -1,0 +1,284 @@
+<html>
+<head>
+  <title>Sunburst Graph</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.0-beta.38/vega.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.0-beta.6/vega-lite.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.0.0-beta.19/vega-embed.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+</head>
+<body>
+
+  <div id="vis"></div>
+
+  <script type="text/javascript">
+    var y12 = {
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "width": 400,
+  "height": 350,
+  "padding": "auto",
+  "autosize": "none",
+  "data": [
+    {
+      "name": "mapping",
+      "values": [
+             {"InfoType": "person","c":"brown"},
+    
+        {"InfoType": "Employment","c":"#c7e9b4"},
+        {"InfoType": "Positions","c":"#99d8c9"},
+        {"InfoType": "PositionInfo","c":"#238b45"}
+      
+      ]
+    },
+    {
+      "name": "Prov",
+      "values": [
+        {"id": 1,"name": "person","parent": null,"InfoType":"person"},
+{"parent":-561321014,"name":"IRP_id#1148004484592867067.issuer","id":-124698016,"family":"name","size":20,"InfoType":"white"},
+{"parent":-1549551881,"name":"FS INVESTMENT CORP IV","id":-561321014,"family":"name","size":20,"InfoType":"white"},
+{"parent":-2009537383,"name":"IRP_id#1148004484592867067.docid","id":-1396309558,"family":"docid","size":20,"InfoType":"white"},
+{"parent":1537559529,"name":"0001387131-16-003851","id":-2009537383,"family":"docid","size":20,"InfoType":"white"},
+{"parent":-1005809498,"name":"IRP_id#1148004484592867067.cik","id":-1631582962,"family":"cik","size":20,"InfoType":"white"},
+{"parent":1537559529,"name":"0001438253","id":-1005809498,"family":"cik","size":20,"InfoType":"white"},
+{"parent":42084833,"name":"IRP_id#1148004484592867067.issuerCik","id":955385774,"family":"companyCik","size":20,"InfoType":"white"},
+{"parent":1537559529,"name":"0001637417","id":42084833,"family":"companyCik","size":20,"InfoType":"white"},
+{"parent":280993253,"name":"IRP_id#1148004484592867067.reportingDate","id":-657362237,"family":"date","size":20,"InfoType":"white"},
+{"parent":1537559529,"name":"2016-01-06","id":280993253,"family":"date","size":20,"InfoType":"white"},
+{"parent":-242863052,"name":"PositionInfo4","id":1537559529,"family":"rangeOfKnownDates","size":20,"InfoType":"white"},
+{"parent":1678793191,"name":"2016-01-06,2016-01-06","id":-242863052,"family":"rangeOfKnownDates","size":20,"InfoType":"white"},
+{"parent":-185317823,"name":"IRP_id#1148004484592867067.cik","id":37915149,"family":"cik","size":20,"InfoType":"white"},
+{"parent":1678793191,"name":"0001438253","id":-185317823,"family":"cik","size":20,"InfoType":"white"},
+{"parent":1166171504,"name":"IRP_id#1148004484592867067.issuerCik","id":-539154198,"family":"companyCik","size":20,"InfoType":"white"},
+{"parent":1678793191,"name":"0001637417","id":1166171504,"family":"companyCik","size":20,"InfoType":"white"},
+{"parent":1034678725,"name":"Positions2","id":1678793191,"family":"positions","size":20,"InfoType":"white"},
+{"parent":-1549551881,"name":"2016-01-06,2016-01-06,null","id":1034678725,"family":"positions","size":20,"InfoType":"white"},
+{"parent":2027233195,"name":"IRP_id#1148004484592867067.issuerCik","id":1618725891,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-1549551881,"name":"0001637417","id":2027233195,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-927471054,"name":"IRP_id#1148004484592867067.cik","id":-1646744195,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-1549551881,"name":"0001438253","id":-927471054,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-216068238,"name":"Employment5","id":-1549551881,"family":"employment","size":20,"InfoType":"white"},
+
+{"parent":-915882131,"name":"IRP_id#7954316966871771477.issuerCik","id":1468946711,"family":"cik","size":20,"InfoType":"Employment"},
+{"parent":-915882131,"name":"IRP_id#1501914646696708186.issuerCik","id":-631211269,"family":"cik","size":20,"InfoType":"Employment"},
+{"parent":1764535403,"name":"0001667292","id":-915882131,"family":"cik","size":20,"InfoType":"Employment"},
+{"parent":-848363267,"name":"IRP_id#7954316966871771477.issuer","id":-16411129,"family":"name","size":20,"InfoType":"Employment"},
+{"parent":-848363267,"name":"IRP_id#1501914646696708186.issuer","id":1627734435,"family":"name","size":20,"InfoType":"Employment"},
+{"parent":1764535403,"name":"FS GLOBAL CREDIT OPPORTUNITIES FUND - T","id":-848363267,"family":"name","size":20,"InfoType":"Employment"},
+{"parent":1224648422,"name":"IRP_id#7954316966871771477.cik","id":1472488677,"family":"cik","size":20,"InfoType":"Employment"},
+{"parent":1224648422,"name":"IRP_id#1501914646696708186.cik","id":-771110789,"family":"cik","size":20,"InfoType":"Employment"},
+{"parent":1764535403,"name":"0001438253","id":1224648422,"family":"cik","size":20,"InfoType":"Employment"},
+{"parent":-1039139034,"name":"IRP_id#3190255268008672581.issuerCik","id":-1179808705,"family":"companyCik","size":20,"InfoType":"Positions"},
+{"parent":-1039139034,"name":"IRP_id#9085306517072428223.issuerCik","id":-139510442,"family":"companyCik","size":20,"InfoType":"Positions"},
+{"parent":1683004671,"name":"0001667293","id":-1039139034,"family":"companyCik","size":20,"InfoType":"Positions"},
+{"parent":-1053133351,"name":"IRP_id#3190255268008672581.cik","id":54315335,"family":"cik","size":20,"InfoType":"Positions"},
+{"parent":-1053133351,"name":"IRP_id#1501914646696708186.cik","id":-1222146961,"family":"cik","size":20,"InfoType":"Positions"},
+{"parent":-1053133351,"name":"IRP_id#9085306517072428223.cik","id":977279284,"family":"cik","size":20,"InfoType":"Positions"},
+{"parent":-1053133351,"name":"IRP_id#7954316966871771477.cik","id":-1629322600,"family":"cik","size":20,"InfoType":"Positions"},
+{"parent":1683004671,"name":"0001438253","id":-1053133351,"family":"cik","size":20,"InfoType":"Positions"},
+{"parent":-1610063892,"name":"IRP_id#7954316966871771477.issuerCik","id":-718247359,"family":"companyCik","size":20,"InfoType":"PositionInfo"},
+{"parent":-1610063892,"name":"IRP_id#1501914646696708186.issuerCik","id":599313688,"family":"companyCik","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001667292","id":-1610063892,"family":"companyCik","size":20,"InfoType":"PositionInfo"},
+{"parent":-1374262373,"name":"IRP_id#7954316966871771477.docid","id":290476291,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001387131-16-005282","id":-1374262373,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-373931624,"name":"IRP_id#1501914646696708186.cik","id":-104587820,"family":"cik","size":20,"InfoType":"PositionInfo"},
+{"parent":-373931624,"name":"IRP_id#9085306517072428223.cik","id":-732296485,"family":"cik","size":20,"InfoType":"PositionInfo"},
+{"parent":-373931624,"name":"IRP_id#7954316966871771477.cik","id":-1462948704,"family":"cik","size":20,"InfoType":"PositionInfo"},
+{"parent":-373931624,"name":"IRP_id#3190255268008672581.cik","id":1282619454,"family":"cik","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001438253","id":-373931624,"family":"cik","size":20,"InfoType":"PositionInfo"},
+{"parent":-1511125967,"name":"IRP_id#9085306517072428223.docid","id":100588096,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001387131-16-005167","id":-1511125967,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-702859330,"name":"IRP_id#9085306517072428223.issuerCik","id":1637694502,"family":"companyCik","size":20,"InfoType":"PositionInfo"},
+{"parent":-702859330,"name":"IRP_id#3190255268008672581.issuerCik","id":148781987,"family":"companyCik","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001667293","id":-702859330,"family":"companyCik","size":20,"InfoType":"PositionInfo"},
+{"parent":24473972,"name":"IRP_id#3190255268008672581.docid","id":-1444058565,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001387131-16-005284","id":24473972,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":1154154398,"name":"IRP_id#1501914646696708186.docid","id":638408203,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"0001387131-16-005196","id":1154154398,"family":"docid","size":20,"InfoType":"PositionInfo"},
+{"parent":-1482689730,"name":"IRP_id#1501914646696708186.reportingDate","id":687892664,"family":"date","size":20,"InfoType":"PositionInfo"},
+{"parent":-1482689730,"name":"IRP_id#7954316966871771477.reportingDate","id":677433222,"family":"date","size":20,"InfoType":"PositionInfo"},
+{"parent":-1482689730,"name":"IRP_id#3190255268008672581.reportingDate","id":-1932167471,"family":"date","size":20,"InfoType":"PositionInfo"},
+{"parent":-1482689730,"name":"IRP_id#9085306517072428223.reportingDate","id":524353311,"family":"date","size":20,"InfoType":"PositionInfo"},
+{"parent":-549250473,"name":"2016-04-28","id":-1482689730,"family":"date","size":20,"InfoType":"PositionInfo"},
+{"parent":409604321,"name":"PositionInfo1","id":-549250473,"family":"rangeOfKnownDates","size":20,"InfoType":"PositionInfo"},
+{"parent":1683004671,"name":"2016-04-28,2016-04-28","id":409604321,"family":"rangeOfKnownDates","size":20,"InfoType":"PositionInfo"},
+{"parent":-827892145,"name":"IRP_id#7954316966871771477.issuerCik","id":433017456,"family":"companyCik","size":20,"InfoType":"Positions"},
+{"parent":-827892145,"name":"IRP_id#1501914646696708186.issuerCik","id":415773701,"family":"companyCik","size":20,"InfoType":"Positions"},
+{"parent":1683004671,"name":"0001667292","id":-827892145,"family":"companyCik","size":20,"InfoType":"Positions"},
+{"parent":-922672230,"name":"Positions1","id":1683004671,"family":"positions","size":20,"InfoType":"Positions"},
+{"parent":1764535403,"name":"2016-04-28,2016-04-28,null","id":-922672230,"family":"positions","size":20,"InfoType":"Positions"},
+{"parent":2008604251,"name":"Employment2","id":1764535403,"family":"employment","size":20,"InfoType":"Employment"},
+{"parent":1,"name":"0001667292,FS GLOBAL CREDIT OPPORTUNITIES FUND - T,2016-04-28,2016-04-28,null","id":2008604251,"family":"employment","size":20,"InfoType":"Employment"},{"parent":1,"name":"0001637417,FS INVESTMENT CORP IV,2016-01-06,2016-01-06,null","id":-216068238,"family":"employment","size":20,"InfoType":"white"},{"parent":-2005972677,"name":"IRP_id#1148004484592867067.issuer","id":-1201749167,"family":"name","size":20,"InfoType":"white"},
+{"parent":-949569368,"name":"FS INVESTMENT CORP IV","id":-2005972677,"family":"name","size":20,"InfoType":"white"},
+{"parent":-915557796,"name":"IRP_id#1148004484592867067.issuerCik","id":-2015925068,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-949569368,"name":"0001637417","id":-915557796,"family":"cik","size":20,"InfoType":"white"},
+{"parent":1864133528,"name":"IRP_id#1148004484592867067.cik","id":-1990331025,"family":"cik","size":20,"InfoType":"white"},
+{"parent":403038269,"name":"0001438253","id":1864133528,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-789786622,"name":"IRP_id#1148004484592867067.issuerCik","id":-146270204,"family":"companyCik","size":20,"InfoType":"white"},
+{"parent":403038269,"name":"0001637417","id":-789786622,"family":"companyCik","size":20,"InfoType":"white"},
+{"parent":-1798543224,"name":"IRP_id#1148004484592867067.docid","id":773166021,"family":"docid","size":20,"InfoType":"white"},
+{"parent":403038269,"name":"0001387131-16-003851","id":-1798543224,"family":"docid","size":20,"InfoType":"white"},
+{"parent":-1531546520,"name":"IRP_id#1148004484592867067.reportingDate","id":689210736,"family":"date","size":20,"InfoType":"white"},
+{"parent":403038269,"name":"2016-01-06","id":-1531546520,"family":"date","size":20,"InfoType":"white"},
+{"parent":-636374888,"name":"BoardInfo3","id":403038269,"family":"rangeOfKnownDates","size":20,"InfoType":"white"},
+{"parent":-949569368,"name":"2016-01-06,2016-01-06","id":-636374888,"family":"rangeOfKnownDates","size":20,"InfoType":"white"},
+{"parent":-1918129757,"name":"IRP_id#1148004484592867067.cik","id":-782303570,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-949569368,"name":"0001438253","id":-1918129757,"family":"cik","size":20,"InfoType":"white"},
+{"parent":-1389313987,"name":"Board1","id":-949569368,"family":"board_membership","size":20,"InfoType":"white"},
+{"parent":1,"name":"0001637417,FS INVESTMENT CORP IV,2016-01-06,2016-01-06","id":-1389313987,"family":"board_membership","size":20,"InfoType":"white"},{"parent":-1717141198,"name":"IRP_id#9085306517072428223.cik","id":1941533526,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":-1717141198,"name":"IRP_id#1501914646696708186.cik","id":-1700581654,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":-1717141198,"name":"IRP_id#7954316966871771477.cik","id":-1345565950,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":-1717141198,"name":"IRP_id#3190255268008672581.cik","id":-1182520277,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001438253","id":-1717141198,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":-1123668737,"name":"IRP_id#1501914646696708186.issuerCik","id":1222796511,"family":"companyCik","size":20,"InfoType":"sss"},
+{"parent":-1123668737,"name":"IRP_id#7954316966871771477.issuerCik","id":-1965734174,"family":"companyCik","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001667292","id":-1123668737,"family":"companyCik","size":20,"InfoType":"sss"},
+{"parent":803568911,"name":"IRP_id#1501914646696708186.docid","id":-1760803764,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001387131-16-005196","id":803568911,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":1113853631,"name":"IRP_id#7954316966871771477.docid","id":-221743964,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001387131-16-005282","id":1113853631,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":436241144,"name":"IRP_id#9085306517072428223.reportingDate","id":-1127411407,"family":"date","size":20,"InfoType":"sss"},
+{"parent":436241144,"name":"IRP_id#1501914646696708186.reportingDate","id":-1409050518,"family":"date","size":20,"InfoType":"sss"},
+{"parent":436241144,"name":"IRP_id#3190255268008672581.reportingDate","id":-1938005536,"family":"date","size":20,"InfoType":"sss"},
+{"parent":436241144,"name":"IRP_id#7954316966871771477.reportingDate","id":-1639746659,"family":"date","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"2016-04-28","id":436241144,"family":"date","size":20,"InfoType":"sss"},
+{"parent":1137843069,"name":"IRP_id#9085306517072428223.docid","id":1454964517,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001387131-16-005167","id":1137843069,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":-716364013,"name":"IRP_id#3190255268008672581.issuerCik","id":1444678328,"family":"companyCik","size":20,"InfoType":"sss"},
+{"parent":-716364013,"name":"IRP_id#9085306517072428223.issuerCik","id":1264896543,"family":"companyCik","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001667293","id":-716364013,"family":"companyCik","size":20,"InfoType":"sss"},
+{"parent":566671563,"name":"IRP_id#3190255268008672581.docid","id":-1436699922,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":1491025707,"name":"0001387131-16-005284","id":566671563,"family":"docid","size":20,"InfoType":"sss"},
+{"parent":1560967302,"name":"BoardInfo2","id":1491025707,"family":"rangeOfKnownDates","size":20,"InfoType":"sss"},
+{"parent":1479573736,"name":"2016-04-28,2016-04-28","id":1560967302,"family":"rangeOfKnownDates","size":20,"InfoType":"sss"},
+{"parent":-1538448704,"name":"IRP_id#3190255268008672581.issuerCik","id":939540681,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":-1538448704,"name":"IRP_id#9085306517072428223.issuerCik","id":-363492921,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":1479573736,"name":"0001667293","id":-1538448704,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":345384547,"name":"IRP_id#9085306517072428223.cik","id":-166292409,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":345384547,"name":"IRP_id#3190255268008672581.cik","id":2059344053,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":1479573736,"name":"0001438253","id":345384547,"family":"cik","size":20,"InfoType":"sss"},
+{"parent":1505451201,"name":"IRP_id#3190255268008672581.issuer","id":-971484577,"family":"name","size":20,"InfoType":"sss"},
+{"parent":1505451201,"name":"IRP_id#9085306517072428223.issuer","id":-1874876501,"family":"name","size":20,"InfoType":"sss"},
+{"parent":1479573736,"name":"FS GLOBAL CREDIT OPPORTUNITIES FUND - ADV","id":1505451201,"family":"name","size":20,"InfoType":"sss"},
+{"parent":1779481146,"name":"Board4","id":1479573736,"family":"board_membership","size":20,"InfoType":"sss"},
+{"parent":1,"name":"0001667293,FS GLOBAL CREDIT OPPORTUNITIES FUND - ADV,2016-04-28,2016-04-28","id":1779481146,"family":"board_membership","size":20,"InfoType":"sss"}
+
+      ],
+      "transform": [
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "partition",
+          "field": "size",
+          "sort": {"field": "value"},
+          "size": [{"signal": "2*PI"},{"signal": "width / 2"}],
+          "as": ["a0","r0","a1","r1","depth","children"]
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+       "domain": {"data": "mapping","field": "InfoType"},
+      "range": {"data": "mapping", "field": "c"}
+    }
+  ],
+  "marks": [
+    {
+      "type": "arc",
+      "from": {
+        "data": "Prov",
+        "transform": {
+          "type": "pie",
+          "field": "children",
+          "startAngle": {"signal": "datum.a0"},
+          "endAngle": {"signal": "datum.a1"},
+          "sort": {"signal": "sort"}
+        }
+      },
+      "encode": {
+        "enter": {
+          "x": {"signal": "width / 2"},
+          "y": {"signal": "height / 2"},
+          "tooltip": {"signal": "'< ' +datum.name+ '  , ' + datum.family+  '> '"} ,
+           "fill": {"scale": "color","field": "InfoType"} 
+        },
+        "update": {
+          "startAngle": {"signal":"datum.a0+90"},
+          "endAngle": {"signal":"datum.a1+90"},
+          "innerRadius": {"signal": "datum.r0"},
+          "outerRadius": {"signal": "datum.r1"} ,
+          "stroke": {"value": "transparent"},
+          "strokeWidth":  [
+            {"test": "datum.InfoType=='white'","value": 0},
+              {"value": 4}],
+          "zindex": {"value": 1}
+        },
+        "hover": {
+          "stroke": {"value": "red"},
+          "strokeWidth": {"value": 2},
+          "zindex": {"value": 1}
+        }
+      }
+    }
+  ],"legends": [
+  {
+    "fill": "color", 
+   "orient": "top-left",
+      "title": "Tracked entity",
+     
+    "encode": {
+      "title": {
+        "update": {
+          "fontSize": {"value": 10} 
+        ,     "x": {"value": -5},
+         
+          "y": {"value": -8}
+      }},
+      "labels": {
+
+    
+        "update": {
+          "fontSize": {"value": 10},
+          "fill": {"value": "black"},     "x": {"value": 5},
+          "dx": {"value": 20},
+          "y": {"value": -3}
+        },
+        "hover": {
+          "fill": {"value": "firebrick"}
+        }
+      },
+      "symbols": {
+        "update": {
+          "stroke": {"value": "transparent"},"x": {"value": 5},
+          "y": {"value": -3}
+        }
+      }
+    }
+  }
+]
+};
+var tooltipOptions = {
+  theme: 'dark'
+};
+
+ var handler = new vegaTooltip.Handler(tooltipOptions);
+var runtime = vega.parse(y12);
+var view = new vega.View(runtime)
+.tooltip(handler.call)
+  .initialize(document.getElementById("vis"))
+  .run();
+
+    // vega.embed("#vis", y12)
+    // .tooltip(handler.call).update;
+//     .hover().addEventListener('click', function(event, item) {
+//       open('https://watson.analytics.ibmcloud.com/product','_self')
+
+// });;
+  </script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<html>
+<head>
+  <title>Structural summary of provenance traces</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.0-beta.38/vega.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.0-beta.6/vega-lite.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.0.0-beta.19/vega-embed.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+</head>
+<body>
+
+  <div id="vis"></div>
+
+  <script type="text/javascript">
+    var y12 = {
+  "$schema": "https://vega.github.io/schema/vega/v4.json",
+  "width": 1300,
+  "height": 900,
+  "padding": {"left": 150, "top": 35, "right": 5, "bottom": 5},
+  "autosize": "none",
+  "signals": [
+    {
+      "name": "cx",
+      "update": "width / 3"
+    },
+    {
+      "name": "cy",
+      "update": "height / 3"
+    },
+    {
+      "name": "nodeRadius",
+      "value": 17,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 200,
+        "step": 1
+      }
+    },
+    {
+      "name": "nodeCharge",
+      "value": -120,
+      "bind": {
+        "input": "range",
+        "min": -200,
+        "max": 20,
+        "step": 1
+      }
+    },
+    {
+      "name": "linkDistance",
+      "value": 120,
+      "bind": {
+        "input": "range",
+        "min": 5,
+        "max": 250,
+        "step": 1
+      }
+    },
+    {
+      "name": "static",
+      "value": true,
+      "bind": {
+        "input": "checkbox"
+      }
+    },
+    {
+      "description": "State variable for active node fix status.",
+      "name": "fix",
+      "value": 0,
+      "on": [
+        {
+          "events": "symbol:mouseout[!event.buttons], window:mouseup",
+          "update": "0"
+        },
+        {
+          "events": "symbol:mouseover",
+          "update": "fix || 1"
+        },
+        {
+          "events": "[symbol:mousedown, window:mouseup] > window:mousemove!",
+          "update": "2",
+          "force": true
+        }
+      ]
+    },
+    {
+      "description": "Graph node most recently interacted with.",
+      "name": "node",
+      "value": null,
+      "on": [
+        {
+          "events": "symbol:mouseover",
+          "update": "fix === 1 ? item() : node"
+        }
+      ]
+    },
+    {
+      "description": "Flag to restart Force simulation upon data changes.",
+      "name": "restart",
+      "value": false,
+      "on": [
+        {
+          "events": {
+            "signal": "fix"
+          },
+          "update": "fix > 1"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "shapes-mapping",
+      "values": [
+        {
+          "InfoType": "entity",
+          "shape": "circle"
+        },
+        {
+          "InfoType": "activity",
+          "shape": "square"
+        },
+        {
+          "InfoType": "agent",
+          "shape": "diamond"
+        }
+      ]
+    },
+    {
+      "name": "mapping2",
+      "values": [
+        {
+          "InfoType": "entity",
+          "c": "#99d8c9"
+        },
+        {
+          "InfoType": "activity",
+          "c": "#238b45"
+        }
+      ]
+    },
+    {
+      "name": "mapping",
+      "values": [
+        {
+          "InfoType": "used",
+          "c": "#fdbb84"
+        },
+        {
+          "InfoType": "wasGeneratedBy",
+          "c": "brown"
+        }
+      ]
+    },
+    {
+      "name": "node-data",
+      "values": [
+        {
+          "name": "xxx",
+          "index": 0,
+          "structure": "Entity(Record(  BoardMemebershipTupleId-\u003e String )",
+          "type": "result2"
+        },
+     {"name":"act_prov_RobertN_Fitzgerald.json4","index":1,"structure":"Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json68","index":2,"structure":"Activity(Record(  Join1_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json6","index":3,"structure":"Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json116","index":4,"structure":"Activity(Record(  Join1_key-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json23","index":5,"structure":"Activity(Record(  Select_Condition_rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json21","index":6,"structure":"Activity(Record(  Select_Condition_docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json39","index":7,"structure":"Activity(Record(  Select_Condition_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json1357448688","index":8,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.title-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json42","index":9,"structure":"Activity(Record(  Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json1608899638","index":10,"structure":"Entity(Record(  BoardFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json16","index":11,"structure":"Activity(Record(  Select_Condition_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json10","index":12,"structure":"Activity(Record(  Select_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json1323422089","index":13,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1009383690","index":14,"structure":"Entity(Record(  personreferenceId-\u003eRecord(  $-\u003eStr   type-\u003eStr )   companyAddress-\u003eRecord(  $-\u003eStr   type-\u003eStr )   docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   isOfficer-\u003eRecord(  $-\u003eStr   type-\u003eStr )   issuer-\u003eRecord(  $-\u003eStr   type-\u003eStr )   reportingDate-\u003eRecord(  $-\u003eStr   type-\u003eStr )   sicLabel-\u003eRecord(  $-\u003eStr   type-\u003eStr )   isDirector-\u003eRecord(  $-\u003eStr   type-\u003eStr )   issuerCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   sicCodeNum-\u003eRecord(  $-\u003eStr   type-\u003eStr )   stockSymbol-\u003eRecord(  $-\u003eStr   type-\u003eStr )   title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   normalizedTitle-\u003eRecord(  $-\u003eStr   type-\u003eStr )   personName-\u003eRecord(  $-\u003eStr   type-\u003eStr )   cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json12","index":15,"structure":"Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json543431037","index":16,"structure":"Entity(Record(  cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1053759375","index":17,"structure":"Entity(Record(  key.companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.alias-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.docid-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.normalized_title-\u003eRecord(  $-\u003eStr   type-\u003eStr )   key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json680519990","index":18,"structure":"Entity(Record(  board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   name-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json58","index":19,"structure":"Activity(Record(  Join1_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_key-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json1340223305","index":20,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.rangeOfKnownDates-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json38","index":21,"structure":"Activity(Record(  Select_Condition_personName-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":""},{"name":"act_prov_RobertN_Fitzgerald.json60","index":22,"structure":"Activity(Record(  Select_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json104","index":23,"structure":"Activity(Record(  Select_Condition_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json74","index":24,"structure":"Activity(Record(  Select_Condition_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":""},{"name":"act_prov_RobertN_Fitzgerald.json101","index":25,"structure":"Activity(Record(  Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json115","index":26,"structure":"Activity(Record(  Join1_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json1506670550","index":27,"structure":"Entity(Record(  key.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   value.positions-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json107","index":28,"structure":"Activity(Record(  Join1_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json100","index":29,"structure":"Activity(Record(  Select_Condition_positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Positions-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json57","index":30,"structure":"Activity(Record(  Join1_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_key-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_name-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json77","index":31,"structure":"Activity(Record(  Join1_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_board_membership-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json56","index":32,"structure":"Activity(Record(  Select_Condition_employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Employment-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json15","index":33,"structure":"Activity(Record(  Select_Condition_date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json119","index":34,"structure":"Activity(Record(  Join1_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Join2_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   JoinKey_PersonProvenance-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json110","index":35,"structure":"Activity(Record(  Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_IRPPersonAttributes_id-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json2030661621","index":36,"structure":"Entity(Record(  cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   personName-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1521581664","index":37,"structure":"Entity(Record(  PositionInfoFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1703553125","index":38,"structure":"Entity(Record(  BoardInfoFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"act_prov_RobertN_Fitzgerald.json2","index":39,"structure":"Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_companyCik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json0","index":40,"structure":"Activity(Record(  Select_BoardInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_date-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json18","index":41,"structure":"Activity(Record(  Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_PositionInfo-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"act_prov_RobertN_Fitzgerald.json13","index":42,"structure":"Activity(Record(  Select_Board-\u003eRecord(  $-\u003eStr   type-\u003eStr )   Select_Condition_cik-\u003eRecord(  $-\u003eStr   type-\u003eStr )   prov:type-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"activity"},{"name":"ent_prov_RobertN_Fitzgerald.json1957476548","index":43,"structure":"Entity(Record(  personName-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1098701613","index":44,"structure":"Entity(Record(  PositionsFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1309197472","index":45,"structure":"Entity(Record(  EmploymentFileID-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"},{"name":"ent_prov_RobertN_Fitzgerald.json1","index":46,"structure":"Entity(Record(  result-\u003eRecord(  $-\u003eStr   type-\u003eStr ) ) )","type":"entity"}]
+    },
+    {
+      "name": "link-data",
+      "values": [{"card":12,"source":32,"target":27,"value":1,"type":"used"},{"card":8,"source":23,"target":14,"value":1,"type":"used"},{"card":4,"source":32,"target":45,"value":1,"type":"used"},{"card":3,"source":35,"target":36,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":11,"target":14,"value":1,"type":"used"},{"card":12,"source":29,"target":44,"value":1,"type":"wasGeneratedBy"},{"card":24,"source":5,"target":17,"value":1,"type":"used"},{"card":8,"source":33,"target":17,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":9,"target":14,"value":1,"type":"used"},{"card":4,"source":28,"target":44,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":7,"target":14,"value":1,"type":"used"},{"card":12,"source":3,"target":14,"value":1,"type":"used"},{"card":4,"source":26,"target":46,"value":1,"type":"wasGeneratedBy"},{"card":6,"source":4,"target":18,"value":1,"type":"used"},{"card":21,"source":22,"target":20,"value":1,"type":"used"},{"card":12,"source":3,"target":13,"value":1,"type":"wasGeneratedBy"},{"card":12,"source":12,"target":14,"value":1,"type":"used"},{"card":8,"source":6,"target":14,"value":1,"type":"used"},{"card":6,"source":4,"target":46,"value":1,"type":"wasGeneratedBy"},{"card":16,"source":25,"target":27,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":41,"target":14,"value":1,"type":"used"},{"card":4,"source":2,"target":45,"value":1,"type":"wasGeneratedBy"},{"card":24,"source":42,"target":20,"value":1,"type":"wasGeneratedBy"},{"card":12,"source":1,"target":13,"value":1,"type":"wasGeneratedBy"},{"card":16,"source":32,"target":45,"value":1,"type":"wasGeneratedBy"},{"card":4,"source":29,"target":44,"value":1,"type":"used"},{"card":15,"source":35,"target":14,"value":1,"type":"used"},{"card":12,"source":40,"target":14,"value":1,"type":"used"},{"card":4,"source":26,"target":45,"value":1,"type":"used"},{"card":4,"source":2,"target":44,"value":1,"type":"used"},{"card":45,"source":15,"target":38,"value":1,"type":"wasGeneratedBy"},{"card":3,"source":30,"target":36,"value":1,"type":"used"},{"card":38,"source":15,"target":13,"value":1,"type":"used"},{"card":7,"source":34,"target":10,"value":1,"type":"used"},{"card":16,"source":25,"target":14,"value":1,"type":"used"},{"card":12,"source":39,"target":13,"value":1,"type":"wasGeneratedBy"},{"card":7,"source":34,"target":46,"value":1,"type":"wasGeneratedBy"},{"card":12,"source":12,"target":20,"value":1,"type":"wasGeneratedBy"},{"card":12,"source":39,"target":14,"value":1,"type":"used"},{"card":28,"source":22,"target":10,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":41,"target":17,"value":1,"type":"wasGeneratedBy"},{"card":4,"source":28,"target":37,"value":1,"type":"used"},{"card":24,"source":42,"target":14,"value":1,"type":"used"},{"card":8,"source":6,"target":17,"value":1,"type":"wasGeneratedBy"},{"card":28,"source":5,"target":37,"value":1,"type":"wasGeneratedBy"},{"card":7,"source":22,"target":10,"value":1,"type":"used"},{"card":3,"source":30,"target":18,"value":1,"type":"wasGeneratedBy"},{"card":3,"source":19,"target":36,"value":1,"type":"used"},{"card":4,"source":5,"target":37,"value":1,"type":"used"},{"card":7,"source":31,"target":38,"value":1,"type":"used"},{"card":8,"source":9,"target":8,"value":1,"type":"wasGeneratedBy"},{"card":12,"source":1,"target":14,"value":1,"type":"used"},{"card":7,"source":31,"target":10,"value":1,"type":"wasGeneratedBy"},{"card":12,"source":40,"target":13,"value":1,"type":"wasGeneratedBy"},{"card":7,"source":15,"target":38,"value":1,"type":"used"},{"card":8,"source":7,"target":8,"value":1,"type":"wasGeneratedBy"},{"card":3,"source":19,"target":18,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":23,"target":27,"value":1,"type":"wasGeneratedBy"},{"card":8,"source":33,"target":14,"value":1,"type":"used"},{"card":8,"source":29,"target":8,"value":1,"type":"used"},{"card":8,"source":11,"target":17,"value":1,"type":"wasGeneratedBy"}]
+       }]
+       ,
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {
+        "data": "mapping2",
+        "field": "InfoType"
+      },
+      "range": {
+        "data": "mapping2",
+        "field": "c"
+      }
+    },
+    {
+      "name": "color2",
+      "type": "ordinal",
+      "domain": {
+        "data": "mapping",
+        "field": "InfoType"
+      },
+      "range": {
+        "data": "mapping",
+        "field": "c"
+      }
+    },
+    {
+      "name": "shapes",
+      "type": "ordinal",
+      "domain": {
+        "data": "shapes-mapping",
+        "field": "InfoType"
+      },
+      "range": {
+        "data": "shapes-mapping",
+        "field": "shape"
+      }
+    }
+  ],
+  "marks": [
+    {
+      "name": "nodes",
+      "type": "symbol",
+      "zindex": 1,
+      "from": {
+        "data": "node-data"
+      },
+      "on": [
+        {
+          "trigger": "fix",
+          "modify": "node",
+          "values": "fix === 1 ? {fx:node.x, fy:node.y} : {fx:x(), fy:y()}"
+        },
+        {
+          "trigger": "!fix",
+          "modify": "node",
+          "values": "{fx: null, fy: null}"
+        }
+      ],
+      "encode": {
+        "enter": {
+          "fill": {
+            "scale": "color",
+            "field": "type"
+          },
+          "shape": {
+            "scale": "shapes",
+            "field": "type"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "text": {
+            "field": "index"
+          }
+        },
+        "update": {
+          "size": {
+            "signal": " nodeRadius * nodeRadius"
+          },
+          "cursor": {
+            "value": "pointer"
+          },
+          "tooltip": {
+            "signal": "'< ' +datum.index+ '  , ' + datum.structure+  '> '"
+          }
+        }
+      },
+      "transform": [
+        {
+          "type": "force",
+          "iterations": 900,
+          "restart": {
+            "signal": "restart"
+          },
+          "static": {
+            "signal": "static"
+          },
+          "forces": [
+            {
+              "force": "center",
+              "x": {
+                "signal": "cx"
+              },
+              "y": {
+                "signal": "cy"
+              }
+            },
+            {
+              "force": "collide",
+              "radius": {
+                "signal": "nodeRadius"
+              }
+            },
+            {
+              "force": "nbody",
+              "strength": {
+                "signal": "nodeCharge"
+              }
+            },
+            {
+              "force": "link",
+              "links": "link-data",
+              "distance": {
+                "signal": "linkDistance"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "nodes-text",
+      "type": "text",
+      "from": {
+        "data": "nodes"
+      },
+      "encode": {
+        "enter": {
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 9
+          },
+          "fontWeight": {
+            "value": "bold"
+          }
+        },
+        "update": {
+          "x": {
+            "signal": "datum.x+9"
+          },
+          "y": {
+            "signal": "datum.y+1"
+          },
+          "vx": {
+            "signal": "datum.vx+2"
+          },
+          "vy": {
+            "signal": "datum.vy+2"
+          }
+        }
+      }
+    },
+    {
+      "type": "path",
+      "from": {
+        "data": "link-data"
+      },
+      "encode": {
+        "enter": {
+          "stroke": {
+            "scale": "color2",
+            "field": "type"
+          },
+          "strokeWidth": {
+            "value": 1
+          }
+        },
+        "update": {
+          "stroke": {
+            "scale": "color2",
+            "field": "type"
+          },
+          "tooltip": {
+            "signal": "' ' +datum.type+','+datum.card+ ' '"
+          }
+        }
+      },
+      "transform": [
+        {
+          "type": "linkpath",
+          "shape": "line",
+          "sourceX": "datum.source.x",
+          "sourceY": "datum.source.y",
+          "targetX": "datum.target.x",
+          "targetY": "datum.target.y"
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "padding": 5,
+      "orient": "top-right",
+      "title": "Type of node",
+      "encode": {
+        "title": {
+          "update": {
+            "fontSize": {
+              "value": 19
+            }
+          }
+        },
+        "labels": {
+          "interactive": true,
+          "update": {
+            "fontSize": {
+              "value": 15
+            },
+            "fill": {
+              "value": "black"
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "firebrick"
+            }
+          }
+        },
+        "symbols": {
+          "update": {
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    },
+    {
+      "fill": "color2",
+      "padding": 5,
+      "orient": "top-left",
+      "title": "Type of relationship",
+      "encode": {
+        "title": {
+          "update": {
+            "fontSize": {
+              "value": 19
+            }
+          }
+        },
+        "labels": {
+          "interactive": true,
+          "update": {
+            "fontSize": {
+              "value": 15
+            },
+            "fill": {
+              "value": "black"
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "firebrick"
+            }
+          }
+        },
+        "symbols": {
+          "update": {
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    }
+  ]
+};
+var tooltipOptions = {
+  theme: 'dark'
+};
+
+ var handler = new vegaTooltip.Handler(tooltipOptions);
+var runtime = vega.parse(y12);
+var view = new vega.View(runtime)
+.tooltip(handler.call)
+  .initialize(document.getElementById("vis"))
+  .run();
+
+    // vega.embed("#vis", y12)
+    // .tooltip(handler.call).update;
+//     .hover().addEventListener('click', function(event, item) {
+//       open('https://watson.analytics.ibmcloud.com/product','_self')
+
+// });;
+  </script>
+</body>
+</html>
